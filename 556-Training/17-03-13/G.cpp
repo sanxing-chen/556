@@ -27,7 +27,7 @@ struct arc {
 };
 struct dinic {
     int pre[N], mcnt, s, t;
-    arc e[M];
+    arc e[2 * M];
     void init(int n) {
         mcnt = 0;
         memset(pre, -1, sizeof pre);
@@ -77,9 +77,9 @@ struct dinic {
         return ans;
     }
 };
-// spfa 需要双向加边，边数加倍，否则可能 TLE
 struct spfa {
-    int pre[N], mcnt, s, dis[N], vis[N];
+    int pre[N], mcnt, s, dis[N];
+    bool vis[N];
     arc e[2 * M];
     void init(int i) {
         mems(pre, -1);
@@ -93,24 +93,25 @@ struct spfa {
     void go() {
         queue<int> q;
         mems(dis, 0x3f);
-        mems(vis, 0);
+        mems(vis, false);
         dis[s] = 0;
         q.push(s);
         while (!q.empty()) {
             int u = q.front();
             q.pop();
-            vis[u] = 0;
+            vis[u] = false;
             for (int i = pre[u]; ~i; i = e[i].next) {
                 int v = e[i].x, c = e[i].f;
                 if (dis[v] > dis[u] + c) {
                     dis[v] = dis[u] + c;
-                    if (!vis[v]) vis[v] = 1, q.push(v);
+                    if (!vis[v]) vis[v] = true, q.push(v);
                 }
             }
         }
     }
 };
 vector<int> g[N];
+// bfs最小深度
 int dis[N];
 void bfs() {
     mems(dis, -1);

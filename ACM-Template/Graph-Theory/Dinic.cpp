@@ -1,8 +1,8 @@
 //dinic dfs 可能爆栈，扩栈或使用非递归版本或 ISAP
 #pragma comment(linker, "/STACK:1024000000,1024000000")
 const int INF = 0x3f3f3f3f;
-const int N = 2020;
-const int M = 60010;
+const int N = ;
+const int M = ;
 // 点与边
 
 struct arc {
@@ -10,7 +10,8 @@ struct arc {
 };
 struct dinic {
     int pre[N], mcnt, s, t;
-    arc e[M];
+    arc e[2 * M];
+// dinic 需要双向加边，边数加倍，否则可能 TLE
 // 初始化，起点和终点
     void init(int n, int m) {
         mcnt = 0;
