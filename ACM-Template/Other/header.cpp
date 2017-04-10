@@ -11,7 +11,8 @@
 #include <set>
 #include <string>
 #include <vector>
-
+//#pragma comment(linker, "/STACK:1024000000,1024000000")
+#define all(a) (a).begin(), (a).end()
 #define ll long long
 #define endl "\n"
 #define DE cout << "------" << endl
