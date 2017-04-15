@@ -1,57 +1,35 @@
 const int N = ; //最大点数
 const int M = ; //最大边数
-
 struct edge {
     int u, v, cost;
-};
-edge es[M];
-
-bool cmp(const edge &e1, const edge &e2) {
-    return e1.cost < e2.cost;
-}
-
-struct Union {
-    int fa[N];
-    int find(int x) {
-        if (fa[x] == x)
-            return x;
-        else {
-            fa[x] = find(fa[x]);
-            return fa[x];
-        }
-    }
-    void unite(int x, int y) {
-        fa[find(x)] = fa[find(y)];
-        return;
-    }
-    bool same(int x, int y) {
-        return (find(x) == find(y));
-    }
-    void init_union_find(int x) {
-        for (int i = 1; i <= x; i++) {
-            fa[i] = i;
-        }
+    bool operator<(const edge &e) const {
+        return this->cost < e.cost;
     }
 };
-
 struct Kruskal {
-    Union U;
-
-    int V, E; // 顶点数和边数
-    void init(int v, int e) {
-        V = v, E = e;
-        U.init_union_find(V);
+    vector<edge> es;
+    int root[N];
+    void init(int v) {
+        es.clear();
+        for (int i = 0; i <= v; i++) root[i] = i;
+    }
+    void add_edge(int u, int v, int cost) {
+        es.push_back(edge{u, v, cost});
+    }
+    int uni(int u) {
+        return u == root[u] ? u : root[u] = uni(root[u]);
     }
     ll go() {
-        sort(es, es + E, cmp);
+        sort(es.begin(), es.end());
         ll res = 0;
-        for (int i = 0; i < E; i++) {
-            edge e = es[i];
-            if (!U.same(e.u, e.v)) {
-                U.unite(e.u, e.v);
+        for (int i = 0; i < es.size(); i++) {
+            edge &e = es[i];
+            int x = uni(e.u), y = uni(e.v);
+            if (x != y) {
                 res += e.cost;
+                root[x] = y;
             }
         }
         return res;
     }
-};
+} K;
