@@ -21,15 +21,6 @@
 using namespace std;
 const int MOD = 1e9 + 7;
 const int INF = 0x3f3f3f3f;
-ll PowerMod(ll a, ll b, ll c) {
-    ll ans = 1;
-    while (b) {
-        if (b & 1) ans = (ans * a) % c;
-        b >>= 1;
-        a = (a * a) % c;
-    }
-    return ans;
-}
 int f[100005];
 vector<int> v;
 int KMP(string s, string t) {
