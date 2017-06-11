@@ -19,7 +19,7 @@ using namespace std;
 const int MOD = 1e9 + 7;
 const int INF = 0x3f3f3f3f;
 int phi[500000] = {0};
-void phi_table(int n) {
+void phi_table(int n) { // table
     for (int i = 2; i <= n; i++) phi[i] = 0;
     phi[1] = 1;
     for (int i = 2; i <= n; i++)
@@ -30,7 +30,7 @@ void phi_table(int n) {
             }
         }
 }
-int phi(int x) {
+int phi(int x) { // single
     int ret = x;
     for (int i = 2; i * i <= x; ++i) {
         if (x % i == 0) {

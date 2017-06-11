@@ -1,3 +1,4 @@
+//容斥原理
 for (int i = 0; i < all; i++) {
     int U = i, cnt = 0;
     for (int j = 1; j <= n; j++) vis[j] = U & 1, U >>= 1, cnt += vis[j]; //记录每种情况

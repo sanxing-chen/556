@@ -36,7 +36,7 @@ long long China(LL A[], LL B[], LL M[], int n) { //求解A[i]x = B[i] (mod M[i])
     return x; //返回的x就是答案，m是最后的lcm值
 }
 
-/*快速？*/
+/*快速*/
 LL a[20], b[20], l, r;
 int T, n, Cas = 1, vis[20];
 LL pow(LL a, LL b, LL p) {
