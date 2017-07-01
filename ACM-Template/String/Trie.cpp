@@ -48,5 +48,6 @@ struct Trie { //小写字母版
     }
 };
 int main(){
+    int a,b;
     return 0;
 }
