@@ -41,3 +41,14 @@ void solve3(int y, int z, int p) {
     }
     puts("Orz, I cannot find x!");
 }
+/*
+
+LL D=1%C; LL g=0,d;
+while(  ( d=gcd(A,C)   )  !=1 )
+{
+        if(B%d)return -1;
+        B/=d;C/=d;
+        g++;D=D*(A/d)%C;
+}
+
+*/
