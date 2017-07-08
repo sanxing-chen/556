@@ -11,9 +11,9 @@ using namespace std;
 
 #define lson rt << 1
 #define rson rt << 1 | 1
-#define Pair pair<double, Node>
+#define Pair pair<long long, Node>
 #define Sqrt2(x) (x) * (x)
-
+typedef long long ll;
 int n, k, idx;
 
 struct Node {
@@ -21,6 +21,7 @@ struct Node {
     bool operator<(const Node &u) const {
         return feature[idx] < u.feature[idx];
     }
+    int id; //出现顺序
 } _data[N]; //_data[]数组代表输入的数据
 
 priority_queue<Pair> Q; //队列Q用于存放离p最近的m个数据
@@ -52,8 +53,9 @@ void KDTree::Build(int l, int r, int rt, int dept) {
 void KDTree::Query(Node p, int m, int rt, int dept) {
     if (flag[rt] == -1) return; //不存在的节点不遍历
     Pair cur(0, data[rt]);      //获取当前节点的数据和到p的距离
-    for (int i = 0; i < k; i++) cur.first += Sqrt2(cur.second.feature[i] - p.feature[i]);
-    int dim = dept % k; //跟建树一样，这样能保证相同节点的dim值不变
+    for (int i = 0; i < k; i++)
+        cur.first += (ll) Sqrt2((ll) cur.second.feature[i] - (ll) p.feature[i]); //估计距离 容易爆
+    int dim = dept % k; //跟建树一样，这样能保证相同节点的dim值不变 。 只需要使用用到的维度
     bool fg = 0;        //用于标记是否需要遍历右子树
     int x = lson;
     int y = rson;
@@ -62,17 +64,17 @@ void KDTree::Query(Node p, int m, int rt, int dept) {
     if (~flag[x]) Query(p, m, x, dept + 1); //如果节点x存在，则进入子树继续遍历
 
     //以下是回溯过程，维护一个优先队列
-    if (Q.size() < m) //如果队列没有满，则继续放入
+    if (Q.size() < m) //如果队列没有满，则继续放入     //点使用限制
     {
         Q.push(cur);
         fg = 1;
     } else {
-        if (cur.first < Q.top().first) //如果找到更小的距离，则用于替换队列Q中最大的距离的数据
+        if (cur.first < Q.top().first) //如果找到更小的距离，则用于替换队列Q中最大的距离的数据 。／／点使用限制
         {
             Q.pop();
             Q.push(cur);
         }
-        if (Sqrt2(p.feature[dim] - data[rt].feature[dim]) < Q.top().first) {
+        if ((ll) Sqrt2((ll) p.feature[dim] - (ll) data[rt].feature[dim]) < Q.top().first) {
             fg = 1;
         }
     }
@@ -85,16 +87,16 @@ void Print(Node data) {
 }
 
 int main() {
-    while (scanf("%d%d", &n, &k) != EOF) {
+    while (scanf("%d%d", &n, &k) != EOF) { // n个点 。 k维度
         for (int i = 0; i < n; i++)
             for (int j = 0; j < k; j++) scanf("%d", &_data[i].feature[j]);
         kd.Build(0, n - 1, 1, 0);
         int t, m;
         scanf("%d", &t);
-        while (t--) {
+        while (t--) { // t个询问
             Node p;
             for (int i = 0; i < k; i++) scanf("%d", &p.feature[i]);
-            scanf("%d", &m);
+            scanf("%d", &m);            //求第1-m临近点
             while (!Q.empty()) Q.pop(); //事先需要清空优先队列
             kd.Query(p, m, 1, 0);
             printf("the closest %d points are:\n", m);

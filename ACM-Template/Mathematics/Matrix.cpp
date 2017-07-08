@@ -1,6 +1,6 @@
 const int N;
 struct Mat {
-    ll mat[N][N];
+    ll mat[N][N]; //每个Mat使用前都要memset 。  否则会出现奇奇怪怪的错误
 };
 Mat operator*(Mat a, Mat b) {
     Mat c;
