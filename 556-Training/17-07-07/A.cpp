@@ -29,6 +29,7 @@ int main() {
     cin >> t;
     while (t--) {
         cin >> n;
+        ans = 0;
         for (int i = 0; i < n; i++) {
             cin >> a >> b;
             ans += a * b;
