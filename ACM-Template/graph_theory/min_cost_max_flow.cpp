@@ -69,7 +69,7 @@ struct MCMF {
         }
         return true;
     }
-
+    // 需保证无负环
     int MincostMaxflow(int s, int t, double &cost) { //@type
         int flow = 0;
         cost = 0;
