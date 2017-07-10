@@ -18,6 +18,7 @@
 #define DE cout << "------" << endl
 #define mems(a, b) memset(a, b, sizeof a)
 #define pii pair<int, int>
+#define REP(i, n) for (int i = 0; i < (n); i++)
 using namespace std;
 const int MOD = 1e9 + 7;
 const int INF = 0x3f3f3f3f;
