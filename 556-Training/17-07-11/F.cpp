@@ -40,26 +40,20 @@ int main() {
     cin >> t;
     while (t--) {
         cin >> n;
-        if (n < 4) {
+        if (n <= 4) {
             cout << n << endl;
             continue;
         }
-        ll temp = 2 * n + 2;
-        ll x = sqrt(temp * 1.0) - 3;
-        while ((x + 2) * (x - 1) <= temp) {
-            x++;
-        }
-        x--;
-        ll gap = n - (x + 2) * (x - 1) / 2;
+        ll x = (sqrt(8 * n + 9.0) - 1) * 0.5;
+        while ((x + 1) * (x + 2) / 2 <= 1 * n + 1) x++;
+        ll gap = n - x * (x + 1) / 2 + 1;
         ll ans;
-
-        if (gap < 0) {
-            ans = (mem[x - 1] * inv[2]) % MOD;
-            ans = ans * (x + 1) % MOD;
-            cout << ans << endl;
-            continue;
-        } else if (gap == 0) {
+        if (gap == 0) {
             cout << mem[x] << endl;
+            continue;
+        }
+        if (x == gap) {
+            cout << (((mem[x] * ((inv[2] + MOD) % MOD)) % MOD) * (x + 2) % MOD) << endl;
             continue;
         }
         ll ni, feiwu;
