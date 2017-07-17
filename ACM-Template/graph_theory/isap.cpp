@@ -3,9 +3,9 @@ const int maxn = 25000;
 const int maxm = 25000;
 // 点与边
 struct Edge {
-    int from, to, cap, flow;
+    int from, to;
+    ll cap, flow;
 };
-
 struct ISAP {
     int n, m, s, t;
     vector<Edge> edges;
@@ -16,7 +16,7 @@ struct ISAP {
     int p[maxn];         // 可增广路上的上一条弧
     int num[maxn];       // 距离标号计数
 
-    void AddEdge(int from, int to, int cap) {
+    void AddEdge(int from, int to, ll cap) {
         edges.push_back((Edge){from, to, cap, 0});
         edges.push_back((Edge){to, from, 0, 0});
         m = edges.size();
@@ -51,8 +51,21 @@ struct ISAP {
         edges.clear();
     }
 
-    int Augment() {
-        int x = t, a = INF;
+    void ClearFlow() {
+        for (int i = 0; i < m; i++) {
+            edges[i].flow = 0;
+        }
+    }
+
+    void print() {
+        for (int i = 0; i < m; i += 2) {
+            cout << edges[i].from << " -> " << edges[i].to << " = " << edges[i].cap << endl;
+        }
+    }
+
+    ll Augment() {
+        int x = t;
+        ll a = INF;
         while (x != s) {
             Edge &e = edges[p[x]];
             a = min(a, e.cap - e.flow);
@@ -67,10 +80,10 @@ struct ISAP {
         return a;
     }
 
-    int Maxflow(int s, int t) {
+    ll Maxflow(int s, int t) {
         this->s = s;
         this->t = t;
-        int flow = 0;
+        ll flow = 0;
         BFS();
         memset(num, 0, sizeof(num));
         for (int i = 0; i < n; i++) num[d[i]]++;
