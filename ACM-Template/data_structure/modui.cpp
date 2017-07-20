@@ -1,77 +1,83 @@
-#include <algorithm>
-#include <iostream>
-#include <math.h>
-#include <stdio.h>
-#include <string.h>
+#include <bits/stdc++.h>
 using namespace std;
-const int INF = 0x3f3f3f3f;
-const int maxn = 50010;
+const long long maxn =100000+10;
 typedef long long ll;
-ll num[maxn], up[maxn], dw[maxn], ans, aa, bb, cc;
-int col[maxn], pos[maxn];
-struct qnode {
-    int l, r, id;
-} qu[maxn];
-bool cmp(qnode a, qnode b) {
-    if (pos[a.l] == pos[b.l]) return a.r < b.r;
-    return pos[a.l] < pos[b.l];
+struct node{
+    int l,r,id;
+}Q[maxn];
+int n,m,k;
+int L=1,R=0;
+long long Ans=0;
+int pos[maxn];
+long long ans[maxn];
+int flag[maxn];
+int a[maxn];
+bool cmp (node a,node b){
+    if (pos[a.l]==pos[b.l])
+    return a.r<b.r;
+    return pos[a.l]<pos[b.l];
 }
-ll gcd(ll x, ll y) {
-    ll tp;
-    while (tp = x % y) {
-        x = y;
-        y = tp;
+inline void add(int x){
+    flag[a[x]]=1;
+    if (flag[a[x]-1]==1&&flag[a[x]+1]==1){
+        Ans--;
     }
-    return y;
+    if (flag[a[x]-1]==0&&flag[a[x]+1]==0){
+        Ans++;
+    }
 }
-void update(int x, int d) {
-    ans -= num[col[x]] * num[col[x]];
-    num[col[x]] += d;
-    ans += num[col[x]] * num[col[x]];
+inline void del (int x){
+    flag[a[x]]=0;
+    if (flag[a[x]-1]==1&&flag[a[x]+1]==1){
+        Ans++;
+    }
+    if (flag[a[x]-1]==0&&flag[a[x]+1]==0){
+        Ans--;
+    }
 }
-int main() {
-    int n, m, i, j, bk, pl, pr, id;
 
-    freopen("in.txt", "r", stdin);
-    while (~scanf("%d%d", &n, &m)) {
-        memset(num, 0, sizeof num);
-        bk = ceil(sqrt(1.0 * n));
-        for (i = 1; i <= n; i++) {
-            scanf("%d", &col[i]);
-            pos[i] = (i - 1) / bk;
+int main(){
+    ios::sync_with_stdio(false);
+    int T;
+    cin>>T;
+   while (T--){
+    Ans=0;
+    cin>>n>>m;
+    int sz=sqrt(n);
+        for(int i=1;i<=n;++i){
+            cin>>a[i];
+            pos[i]=i/sz;
         }
-        for (i = 0; i < m; i++) {
-            scanf("%d%d", &qu[i].l, &qu[i].r);
-            qu[i].id = i;
+        for(int  i=1;i<=m;++i){
+            cin>>Q[i].l>>Q[i].r;
+            Q[i].id=i;
         }
-        sort(qu, qu + m, cmp);
-        pl = 1, pr = 0;
-        ans = 0;
-        for (i = 0; i < m; i++) {
-            id = qu[i].id;
-            if (qu[i].l == qu[i].r) {
-                up[id] = 0, dw[id] = 1;
-                continue;
+        sort(Q+1,Q+1+m,cmp);
+        L=1,R=0;
+        memset(flag,0,sizeof flag);
+        for(int i=1;i<=m;++i){
+           while(R>Q[i].r){
+                del(R);
+                R--;
             }
-            if (pr < qu[i].r) {
-                for (j = pr + 1; j <= qu[i].r; j++) update(j, 1);
-            } else {
-                for (j = pr; j > qu[i].r; j--) update(j, -1);
+            while(R<Q[i].r){
+                R++;
+                add(R);
             }
-            pr = qu[i].r;
-            if (pl < qu[i].l) {
-                for (j = pl; j < qu[i].l; j++) update(j, -1);
-            } else {
-                for (j = pl - 1; j >= qu[i].l; j--) update(j, 1);
+            while(L<Q[i].l){
+                del(L);
+                L++;
             }
-            pl = qu[i].l;
-            aa = ans - qu[i].r + qu[i].l - 1;
-            bb = (ll)(qu[i].r - qu[i].l + 1) * (qu[i].r - qu[i].l);
-            cc = gcd(aa, bb);
-            aa /= cc, bb /= cc;
-            up[id] = aa, dw[id] = bb;
+            while(L>Q[i].l){
+                L--;
+                add(L);
+            }
+                ans[Q[i].id]=Ans;
         }
-        for (i = 0; i < m; i++) printf("%lld/%lld\n", up[i], dw[i]);
-    }
+
+        for(int  i=1;i<=m;++i){
+                cout<<ans[i]<<"\n";
+         }
+   }
     return 0;
 }
