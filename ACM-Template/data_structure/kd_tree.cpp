@@ -38,6 +38,9 @@ for(int i=0;i<k;i++){
        for(int i=0;i<k;i++){
             ret+=max(Sqrt2(data[rt].mn[i]-p[i]),Sqrt2(p[i]-data[rt].mx[i]));
         }
+        O(log^2n)构造
+        O(log n) 插入 删除
+        O(n^(1-1/k)+m) m为每次要搜索的最近点的个数
 */
 #include <algorithm>
 #include <iostream>

@@ -1,4 +1,5 @@
 /*基于点的分治*/
+//O(nlogn)
 #include <algorithm>
 #include <cmath>
 #include <cstdio>

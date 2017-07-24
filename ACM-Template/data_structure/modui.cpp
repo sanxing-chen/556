@@ -1,4 +1,6 @@
 #include <bits/stdc++.h>
+// 注意每次flag l r 的初始化 以及有可能会爆longlong
+// 莫队算法时间复杂度 O（N^1.5）
 using namespace std;
 const long long maxn =100000+10;
 typedef long long ll;
