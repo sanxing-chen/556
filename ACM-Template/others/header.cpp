@@ -19,8 +19,8 @@
 #define REP(i, a, n) for (int i = a; i < (n); i++)
 #define PER(i, a, n) for (int i = (n) -1; i >= a; i--)
 using namespace std;
-typedef pair<int, int> pii;
 typedef long long ll;
+typedef pair<int, int> pii;
 const int MOD = 1e9 + 7;
 const int INF = 0x3f3f3f3f;
 
