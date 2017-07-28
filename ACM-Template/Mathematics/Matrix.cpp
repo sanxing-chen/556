@@ -15,7 +15,7 @@ Mat operator*(Mat a, Mat b) {
     }
     return c;
 }
-Mat operator^(Mat a, int k) {
+Mat operator^(Mat a, ll k) {
     Mat c;
     int i, j;
     for (i = 0; i < N; ++i)
