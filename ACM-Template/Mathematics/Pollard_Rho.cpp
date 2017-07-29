@@ -85,7 +85,7 @@ ll pollard_rho(ll n, ll c) {
     }
 }
 
-void find(ll n, int c) {
+void find(ll n, int c) { //复杂度O(n^0.25)
     if (n == 1) return;
     if (Miller_Rabin(n)) {
         fac[ct++] = n;
