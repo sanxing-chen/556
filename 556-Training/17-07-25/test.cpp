@@ -1,25 +1,20 @@
-//线性筛求mu
 #include <bits/stdc++.h>
+#define endl "\n"
+#define REP(i, x, n) for (int i = (x); i < (n); i++)
+#define PER(i, x, n) for (int i = (n); i >= (x); i--)
+#define sqr(x) ((x) * (x))
+#define pii pair<char, int>
+typedef long long ll;
 using namespace std;
-void init() {
-    memset(vis, 0, sizeof(vis));
-    mu[1] = 1;
-    tot = 0;
-    for (int i = 2; i < maxn; i++) {
-        if (!vis[i]) {
-            prime[tot++] = i;
-            mu[i] = -1;
-        }
-        for (int j = 0; j < tot; j++) {
-            if (i * prime[j] >= maxn) break;
-            vis[i * prime[j]] = true;
-            if (i % prime[j] == 0) {
-                mu[i * prime[j]] = 0;
-                break;
-            } else {
-                mu[i * prime[j]] = -mu[i];
-            }
+ll n;
+string s[100005];
+vector<pii, int> q[27];
+int main() {
+    ios::sync_with_stdio(0);
+    while (cin >> n) {
+        REP(i, 0, n) {
+            cin >> s[i];
         }
     }
-    return;
+    return 0;
 }
