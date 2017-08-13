@@ -15,7 +15,7 @@ ll comb(ll a, ll b, ll p) {
     if (b > a - b) b = a - b;
 
     ll ans = 1, ca = 1, cb = 1;
-    for (LL i = 0; i < b; ++i) {
+    for (ll i = 0; i < b; ++i) {
         ca = (ca * (a - i)) % p;
         cb = (cb * (b - i)) % p;
     }
