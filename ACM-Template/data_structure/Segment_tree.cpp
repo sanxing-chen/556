@@ -2,19 +2,19 @@
 #define endl "\n"
 #define LSON l, m, rt << 1
 #define RSON m + 1, r, rt << 1 | 1
-#define lson  rt << 1
+#define lson rt << 1
 #define rson rt << 1 | 1
 const long long MAXN = 200005;
 using namespace std;
-long long sum[MAXN << 2], tag[MAXN << 2],Max[MAXN << 2];
+long long sum[MAXN << 2], tag[MAXN << 2], Max[MAXN << 2];
 
-void Maintain(long long rt) {  //更新答案
+void Maintain(long long rt) { //更新答案
     sum[rt] = sum[lson] + sum[rson];
-    Max[rt] = max(Max[lson],Max[rson]);
-    return ;
+    Max[rt] = max(Max[lson], Max[rson]);
+    return;
 }
-void Pushdown(long long rt, long long m /*区间长度*/) {  //标记下传
-    if (tag[rt]!= 0){
+void Pushdown(long long rt, long long m /*区间长度*/) { //标记下传
+    if (tag[rt] != 0) {
         tag[lson] = tag[rt];
         tag[rson] = tag[rt];
         sum[lson] %= tag[rt];
@@ -25,12 +25,12 @@ void Pushdown(long long rt, long long m /*区间长度*/) {  //标记下传
     }
     return;
 }
-void PutTag(long long c,long long rt){
-    Pushdown(rt,1);
+void PutTag(long long c, long long rt) {
+    Pushdown(rt, 1);
     sum[rt] %= c;
     Max[rt] %= c;
     tag[rt] = c;
-    return ;
+    return;
 }
 void build(long long l, long long r, long long rt /*=1*/) {
     Max[rt] = 0;
@@ -42,15 +42,15 @@ void build(long long l, long long r, long long rt /*=1*/) {
     long long m = (l + r) >> 1;
     build(LSON);
     build(RSON);
-   // Maintain(rt);
+    // Maintain(rt);
     return;
 }
-inline bool Cut(long long c,long long rt){   //剪枝
-    if (Max[rt]<c) return true;
+inline bool Cut(long long c, long long rt) { //剪枝
+    if (Max[rt] < c) return true;
     return false;
 }
-inline bool Check(long long l,long long r){      //判断标记是否要打
-    return (l==r);
+inline bool Check(long long l, long long r) { //判断标记是否要打
+    return (l == r);
 }
 /****************************************************************/
 void update(long long L /*需要更新的点*/, long long c, long long l, long long r, long long rt /*=1*/) { //单点
@@ -69,22 +69,22 @@ void update(long long L /*需要更新的点*/, long long c, long long l, long l
     return;
 }
 
-long long query(long long L, long long R, long long l, long long r, long long rt /*=1*/) {  //LR为要查询的区间 下同
+long long query(long long L, long long R, long long l, long long r, long long rt /*=1*/) { // LR为要查询的区间 下同
     if (L <= l && r <= R) {
         return sum[rt];
     }
     long long ret = 0;
     long long m = (l + r) >> 1;
-    if (L < m) ret += query(L, R, LSON);
+    if (L <= m) ret += query(L, R, LSON);
     if (m < R) ret += query(L, R, RSON);
     return ret;
 }
 /****************************************************************/
 
 void update2(long long L /*左*/, long long R /*右端点*/, long long c, long long l, long long r, long long rt /*=1*/) {
-    if (L > r || R < l||Cut(c,rt)) return ;
-    if (L <= l && r <= R && Check(l,r)) {
-        PutTag(c,rt);
+    if (L > r || R < l || Cut(c, rt)) return;
+    if (L <= l && r <= R && Check(l, r)) {
+        PutTag(c, rt);
         return;
     }
     Pushdown(rt, r - l + 1);
@@ -96,9 +96,8 @@ void update2(long long L /*左*/, long long R /*右端点*/, long long c, long l
 }
 long long query2(long long L, long long R, long long l, long long r, long long rt /*=1*/) {
     if (L <= l && r <= R) {
-        //cout<< l<<" "<<r<<" "<<sum[rt]<<endl;
+        // cout<< l<<" "<<r<<" "<<sum[rt]<<endl;
         return sum[rt];
-        
     }
     Pushdown(rt, r - l + 1);
     long long m = (l + r) >> 1;
@@ -119,30 +118,30 @@ long long discrete(long long data[] /*初始数组*/, long long n, long long dis
     }
     return m;
 }
-long long n,m;
+long long n, m;
 int main() {
     ios::sync_with_stdio(false);
     cin >> n >> m;
-    build(1,n,1);
-    for (long long i = 1; i <= n ;i++ ){
+    build(1, n, 1);
+    for (long long i = 1; i <= n; i++) {
         long long x;
         cin >> x;
-        update(i,x,1,n,1);
+        update(i, x, 1, n, 1);
     }
     for (long long i = 1; i <= m; i++) {
-        long long op,l,r,x;
+        long long op, l, r, x;
         cin >> op;
         if (op == 1) {
             cin >> l >> r;
-            cout <<query2 (l,r,1,n,1)<<endl;//true
+            cout << query2(l, r, 1, n, 1) << endl; // true
         }
         if (op == 2) {
             cin >> l >> r >> x;
-            update2(l,r,x,1,n,1);//true
+            update2(l, r, x, 1, n, 1); // true
         }
         if (op == 3) {
             cin >> l >> x;
-            update (l,x,1,n,1);//true
+            update(l, x, 1, n, 1); // true
         }
     }
     return 0;
