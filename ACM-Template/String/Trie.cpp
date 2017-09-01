@@ -1,4 +1,4 @@
-const int maxnode = 1005 * 25;
+const int maxnode = 1005 * 25; // 字符串个数 * 字符串长度
 const int sigma_size = 26;
 struct Trie { //小写字母版
     int ch[maxnode][sigma_size];
@@ -7,7 +7,9 @@ struct Trie { //小写字母版
     int sz;           //节点总数
     void init() {
         sz = 1;
-        memset(ch[0], 0, sizeof(ch[0]));
+        mems(ch[0], 0);
+        mems(val, 0);
+        mems(cnt, 0);
     }
     int idx(char c) {
         return c - 'a'; //修改这里来改变字符编号规则
@@ -30,21 +32,27 @@ struct Trie { //小写字母版
         val[u] = v; //串尾附加权值
     }
 
-    int query(char s[]) {
+    void update(char *s, int num) {
+        int u = 0;
+        int n = strlen(s);
+        for (int i = 0; i < n; i++) {
+            int c = idx(s[i]);
+            u = ch[u][c];
+            cnt[u] += num;
+        }
+    }
+
+    int query(char *s) {
         int u = 0;
         int n = strlen(s);
         for (int i = 0; i < n; i++) {
             char c = idx(s[i]);
-            if (!ch[u][c] || u != 0 && cnt[u] <= 1) {
+            if (!ch[u][c] || (u != 0 && cnt[u] < 1)) {
                 return i;
             }
             u = ch[u][c];
         }
         // return cnt[u];   //查询字符串出现了多少次
-        return n;
+        return val[u];
     }
-};
-int main() {
-    int a, b;
-    return 0;
-}
+} solver;
