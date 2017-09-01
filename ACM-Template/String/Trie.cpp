@@ -1,5 +1,3 @@
-#include <cstring>
-#include <string>
 const int maxnode = 1005 * 25;
 const int sigma_size = 26;
 struct Trie { //小写字母版
@@ -7,7 +5,7 @@ struct Trie { //小写字母版
     int val[maxnode];
     int cnt[maxnode]; //可以记录字符串出现的次数
     int sz;           //节点总数
-    Trie() {
+    void init() {
         sz = 1;
         memset(ch[0], 0, sizeof(ch[0]));
     }
