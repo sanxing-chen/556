@@ -1,3 +1,4 @@
+// O(17 * n)
 const int N = 10010;
 vector<int> ed[N];
 struct LCA {
