@@ -9,6 +9,7 @@
 #include <map>
 #include <queue>
 #include <set>
+#include <stack>
 #include <string>
 #include <vector>
 //#pragma comment(linker, "/STACK:1024000000,1024000000")
