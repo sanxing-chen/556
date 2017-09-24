@@ -22,9 +22,9 @@ long long China(int n, long long *a, long long *m) {
     return (ret + M) % M;
 }
 /*r如果不一定互质*/
-typedef long long LL;
-long long China(LL A[], LL B[], LL M[], int n) { //求解A[i]x = B[i] (mod M[i]),总共n个线性方程组
-    LL x = 0, m = 1;
+typedef long long ll;
+long long China(ll A[], LL B[], LL M[], int n) { //求解A[i]x = B[i] (mod M[i]),总共n个线性方程组
+    ll x = 0, m = 1;
     for (int i = 0; i < n; i++) {
         long long a = A[i] * m, b = B[i] - A[i] * x, d = __gcd(M[i], a);
         if (b % d != 0) return -1; //答案不存在，返回-1
@@ -37,16 +37,16 @@ long long China(LL A[], LL B[], LL M[], int n) { //求解A[i]x = B[i] (mod M[i])
 }
 
 /*快速*/
-LL a[20], b[20], l, r;
+ll a[20], b[20], l, r;
 int T, n, Cas = 1, vis[20];
-LL pow(LL a, LL b, LL p) {
-    LL t = 1;
+ll pow(ll a, ll b, ll p) {
+    ll t = 1;
     for (a %= p; b; b >>= 1LL, a = a * a % p)
         if (b & 1LL) t = t * a % p;
     return t;
 }
-LL CRT(LL *a, LL *b, int n) {
-    LL ans = 0, P = 1;
+ll CRT(ll *a, ll *b, int n) {
+    ll ans = 0, P = 1;
     for (int i = 0; i < n; i++)
         if (vis[i]) P *= a[i];
     for (int i = 0; i < n; i++)
