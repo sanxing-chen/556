@@ -17,12 +17,13 @@ struct Palindromic_Tree {
     int next[MAXN][N]; // next指针，next指针和字典树类似，指向的串为当前串两端加上同一个字符构成
     int fail[MAXN]; // fail指针，失配后跳转到fail指针指向的节点
     int cnt[MAXN];  // cnt[i] 表示第i个节点出现过多少次
-    int num[MAXN];
-    int len[MAXN]; // len[i]表示节点i表示的回文串的长度
-    int S[MAXN];   //存放添加的字符
-    int last;      //指向上一个字符所在的节点，方便下一次add
-    int n;         //字符数组指针
-    int p;         //节点指针
+    int num[MAXN];  //以节点i表示的最长回文串的最右端点为回文串结尾的回文串个数。
+    int len[MAXN];  // len[i]表示节点i表示的回文串的长度
+    int S[MAXN];    //存放添加的字符
+    int last;       //指向上一个字符所在的节点，方便下一次add
+    int n;          //字符数组指针
+    int p;          //节点指针
+    ll tot;         //记录回文串总数目
 
     int newnode(int l) { //新建节点
         for (int i = 0; i < N; ++i) next[p][i] = 0;
@@ -59,6 +60,7 @@ struct Palindromic_Tree {
         }
         last = next[cur][c];
         cnt[last]++;
+        tot += num[last];
         return num[last];
     }
 
@@ -72,3 +74,61 @@ struct Palindromic_Tree {
 // 2.求串S内每一个本质不同回文串出现的次数
 // 3.求串S内回文串的个数（其实就是1和2结合起来）
 // 4.求以下标i结尾的回文串的个数
+
+//可以双向加点的回文树
+struct Palindromic_Tree {
+    int nxt[MAXN][26];
+    int fail[MAXN];
+    int len[MAXN];
+    int S[MAXN], L, R;
+    int num[MAXN];
+    int last[2];
+    int p;
+    ll tot;
+
+    int newnode(int l) {
+        for (int i = 0; i < 26; ++i) nxt[p][i] = 0;
+        num[p] = 0;
+        len[p] = l;
+        return p++;
+    }
+
+    void init(int n) {
+        p = 0;
+        newnode(0);
+        newnode(-1);
+
+        clr(S, -1);
+        L = n;
+        R = n - 1;
+        last[0] = last[1] = 1;
+        fail[0] = 1;
+
+        tot = 0;
+    }
+
+    int get_fail(int v, bool d) {
+        if (d)
+            while (S[R - len[v] - 1] != S[R]) v = fail[v];
+        else
+            while (S[L + len[v] + 1] != S[L]) v = fail[v];
+        return v;
+    }
+
+    void add(int c, bool d) {
+        if (d)
+            S[++R] = c;
+        else
+            S[--L] = c;
+        int cur = get_fail(last[d], d);
+        if (!nxt[cur][c]) {
+            int now = newnode(len[cur] + 2);
+            fail[now] = nxt[get_fail(fail[cur], d)][c];
+            nxt[cur][c] = now;
+            num[now] = num[fail[now]] + 1;
+        }
+        last[d] = nxt[cur][c];
+        if (len[last[d]] == R - L + 1) last[d ^ 1] = last[d];
+        tot += num[last[d]];
+    }
+};
