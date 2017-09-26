@@ -16,7 +16,7 @@ const int N = 26;
 struct Palindromic_Tree {
     int next[MAXN][N]; // next指针，next指针和字典树类似，指向的串为当前串两端加上同一个字符构成
     int fail[MAXN]; // fail指针，失配后跳转到fail指针指向的节点
-    int cnt[MAXN];
+    int cnt[MAXN];  // cnt[i] 表示第i个节点出现过多少次
     int num[MAXN];
     int len[MAXN]; // len[i]表示节点i表示的回文串的长度
     int S[MAXN];   //存放添加的字符
