@@ -14,7 +14,7 @@ void build(int l, int r, int rt = 1) {
         sum[rt] = 0;
         return;
     }
-    ll m = (l + r) >> 1;
+    int m = (l + r) >> 1;
     build(LSON);
     build(RSON);
     Maintain(rt);
@@ -26,7 +26,7 @@ void update(int L, ll c, int l, int r, int rt = 1) {
         sum[rt] = c;
         return;
     }
-    ll m = (l + r) >> 1;
+    int m = (l + r) >> 1;
     if (L <= m)
         update(L, c, LSON);
     else
