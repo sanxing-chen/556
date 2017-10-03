@@ -43,6 +43,10 @@ struct Point {
         return sqrt(*this % *this);
     }
 };
+Point Normal(Point A) {
+    double L = A.len();
+    return Point(-A.y / L, A.x / L);
+} // 向量的单位法向量，利用旋转得到
 Point GetLinePlaneProjection(Point A, Point P, Point n) {
     double t = (n % (P - A)) / (n % n);
     return A + n * t; // t * n.len() 是距离
