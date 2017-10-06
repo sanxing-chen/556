@@ -30,3 +30,17 @@ void find_scc(int n) {
     mems(dfsno, 0);
     REP(i, 0, n) if (!dfsno[i]) dfs(i);
 }
+int in[N], out[N];
+int main() {
+    // 缩点为 DAG
+    mems(in, 0);
+    mems(out, 0);
+    REP(i, 0, n) {
+        for (auto j : g[i]) {
+            if (sccno[i] != sccno[j]) {
+                in[sccno[j]]++;
+                out[sccno[i]]++;
+            }
+        }
+    }
+}
