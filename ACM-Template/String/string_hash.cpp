@@ -1,4 +1,5 @@
 // 字符串哈希，可求出一个字符串中所有子串哈希值。
+// 175为参考值，实际上大于1的质数基本重叠率都很小。
 #define ull unsigned long long
 string str;
 ull xp[maxn], hash0[maxn];
