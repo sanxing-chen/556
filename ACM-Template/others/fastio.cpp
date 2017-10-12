@@ -17,13 +17,17 @@ inline char nc() {
 inline bool blank(char ch) {
     return ch == ' ' || ch == '\n' || ch == '\r' || ch == '\t';
 }
-inline void read(int &x) {
+inline bool read(auto &x) {
     char ch;
+    bool ne = false;
     while (blank(ch = nc()))
         ;
-    if (IOerror) return;
+    if (IOerror) return false;
+    if (ch == '-') ne = true, ch = nc();
     for (x = ch - '0'; (ch = nc()) >= '0' && ch <= '9'; x = x * 10 + ch - '0')
         ;
+    if (ne) x = -x;
+    return true;
 }
 #undef BUF_SIZE
 };
