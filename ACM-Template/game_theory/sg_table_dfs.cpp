@@ -29,3 +29,9 @@ void print() {
         cout << i << " " << sg[i] << endl;
     }
 }
+int main() {
+    init();
+    cin >> n;
+    getSG(n);
+    print();
+}
