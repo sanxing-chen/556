@@ -45,6 +45,18 @@ struct ISAP {
         return vis[s];
     }
 
+    // 遍历残量网络，正向边 cap > flow，若从终点开始遍历见 BFS
+    // memset(vis)
+    void dfs(int u) {
+        for (int i = 0; i < G[u].size(); i++) {
+            Edge &e = edges[G[u][i]];
+            if (!vis[e.to] && e.cap > e.flow) {
+                vis[e.to] = 1;
+                dfs(e.to);
+            }
+        }
+    }
+
     void ClearAll(int n) {
         this->n = n;
         for (int i = 0; i < n; i++) G[i].clear();
