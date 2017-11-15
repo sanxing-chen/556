@@ -99,3 +99,16 @@ bool OnSegment(Point P, Point a1, Point a2) {
     a1 = a1 - P, a2 = a2 - P;
     return dcmp((a1 ^ a2) / len) == 0 && dcmp(a1 % a2) <= 0;
 }
+pair<Point, double> FindCircle(Point p1, Point p2, Point p3) {
+    // Point hehe = p2 - p1, haha = p3 - p1;
+    // if (Angle(hehe, haha) == 0) {
+    //     //三点共线
+    // }
+    double x1 = p1.x, x2 = p2.x, x3 = p3.x;
+    double y1 = p1.y, y2 = p2.y, y3 = p3.y;
+    Point c;
+    c.x = ((y3 - y1) * (y2 * y2 - y1 * y1 + x2 * x2 - x1 * x1) + (y2 - y1) * (y1 * y1 - y3 * y3 + x1 * x1 - x3 * x3)) / (2 * (x2 - x1) * (y3 - y1) - 2 * (x3 - x1) * (y2 - y1));
+    c.y = ((x3 - x1) * (x2 * x2 - x1 * x1 + y2 * y2 - y1 * y1) + (x2 - x1) * (x1 * x1 - x3 * x3 + y1 * y1 - y3 * y3)) / (2 * (y2 - y1) * (x3 - x1) - 2 * (y3 - y1) * (x2 - x1));
+    nowr = dis(x1, y1, nowx, nowy);
+    return make_pair(c, nowr);
+}
